@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/diagnosis_nav"
+    app:startDestination="@id/chatFragment">
+
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.vetdoctorapp.view.diagnosis.ui.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
+    <fragment
+        android:id="@+id/prescriptionFragment"
+        android:name="com.example.vetdoctorapp.view.diagnosis.ui.PrescriptionFragment"
+        android:label="fragment_prescription"
+        tools:layout="@layout/fragment_prescription" />
+    <fragment
+        android:id="@+id/notesFragment"
+        android:name="com.example.vetdoctorapp.view.diagnosis.ui.NotesFragment"
+        android:label="fragment_notes"
+        tools:layout="@layout/fragment_notes" />
+</navigation>
