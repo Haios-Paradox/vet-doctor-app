@@ -1,30 +1,29 @@
-package com.example.vetdoctorapp.view.auth
+package com.example.vetdoctorapp.controller.auth
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.vetdoctorapp.model.controller.MainRepository
 import com.example.vetdoctorapp.model.data.User
-import com.google.firebase.auth.FirebaseUser
+import com.example.vetdoctorapp.model.repositories.AuthRepository
 
-class AuthViewModel(private val repo: MainRepository) : ViewModel() {
+class AuthViewModel: ViewModel() {
 
     private val _error = MutableLiveData<Exception>()
     val error: LiveData<Exception> = _error
 
-    private val _loggedInUser = MutableLiveData<FirebaseUser?>()
-    val loggedInUser: MutableLiveData<FirebaseUser?> = _loggedInUser
+    private val _loggedInUser = MutableLiveData<String?>()
+    val loggedInUser: MutableLiveData<String?> = _loggedInUser
 
     init{
         autoLogin()
     }
 
     private fun autoLogin() {
-        _loggedInUser.value = repo.getUser()
+        _loggedInUser.value = AuthRepository.getUser()
     }
 
     fun login(email:String, pass:String){
-        repo.login(
+        AuthRepository.login(
             email,pass,
             onSuccess = {
                 autoLogin()
@@ -36,14 +35,11 @@ class AuthViewModel(private val repo: MainRepository) : ViewModel() {
     }
 
     fun register(email:String, pass:String, userData: User){
-        repo.register(
-            email,pass,userData,
-            onSuccess = {
-                autoLogin()
-            },
-            onFailure = {
-                _error.value = it
-            }
-        )
+        AuthRepository.register(userData,email,pass){_, exception ->
+            if(exception==null)
+                login(email,pass)
+            else
+                _error.value = exception
+        }
     }
 }

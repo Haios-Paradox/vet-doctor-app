@@ -68,21 +68,21 @@
             app:layout_constraintTop_toBottomOf="@+id/edProfileEmail" />
 
         <EditText
-            android:id="@+id/edProfileDescription"
+            android:id="@+id/edProfileSpec"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="84dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:ems="10"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/edHomePhone" />
+            app:layout_constraintTop_toBottomOf="@+id/edProfileDesc" />
 
         <EditText
-            android:id="@+id/edProfileSpecialty"
+            android:id="@+id/edProfileDesc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -131,11 +131,11 @@
             android:gravity="center_vertical"
             android:text="Specialty"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/edProfileDescription"
+            app:layout_constraintBottom_toBottomOf="@+id/edProfileSpec"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/edProfileDescription" />
+            app:layout_constraintTop_toTopOf="@+id/edProfileSpec" />
 
         <TextView
             android:id="@+id/tvProfileDescription"
@@ -145,22 +145,22 @@
             android:gravity="center_vertical"
             android:text="Description"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/edProfileSpecialty"
+            app:layout_constraintBottom_toBottomOf="@+id/edProfileDesc"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/edProfileSpecialty" />
+            app:layout_constraintTop_toTopOf="@+id/edProfileDesc" />
 
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="120dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:src="@drawable/ic_profile"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvProfileName"

@@ -6,9 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.vetdoctorapp.R
+import com.example.vetdoctorapp.controller.main.MainViewModel
 import com.example.vetdoctorapp.databinding.ActivityMainBinding
-import com.example.vetdoctorapp.model.util.ViewModelFactory
-import com.example.vetdoctorapp.view.main.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainViewModel = ViewModelProvider(this, ViewModelFactory.getInstance(this))[MainViewModel::class.java]
+        mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         mainViewModel.error.observe(this){

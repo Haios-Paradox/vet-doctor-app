@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.vetdoctorapp.controller.auth.AuthViewModel
 import com.example.vetdoctorapp.databinding.FragmentRegisterBinding
 import com.example.vetdoctorapp.model.data.User
-import com.example.vetdoctorapp.view.auth.AuthViewModel
 
 class RegisterFragment : Fragment() {
 
@@ -29,7 +29,7 @@ class RegisterFragment : Fragment() {
             val pass = binding.editTextPassword.editText?.text.toString()
 
             if(email.isNotEmpty() && pass.isNotEmpty() && name.isNotEmpty()){
-                authViewModel.register(email,pass, User(name = name))
+                authViewModel.register(email,pass, User(name = name, email = email))
             }
             else{
                 Toast.makeText(requireActivity(),"Please Fill All In", Toast.LENGTH_SHORT).show()

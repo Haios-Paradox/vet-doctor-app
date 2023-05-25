@@ -7,9 +7,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.vetdoctorapp.R
+import com.example.vetdoctorapp.controller.auth.AuthViewModel
 import com.example.vetdoctorapp.databinding.ActivityAuthBinding
-import com.example.vetdoctorapp.model.util.ViewModelFactory
-import com.example.vetdoctorapp.view.auth.AuthViewModel
 import com.example.vetdoctorapp.view.main.ui.MainActivity
 
 class AuthActivity : AppCompatActivity() {
@@ -19,10 +18,10 @@ class AuthActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAuthBinding.inflate(layoutInflater)
 
-        authViewModel = ViewModelProvider(this, ViewModelFactory.getInstance(this))[AuthViewModel::class.java]
+        authViewModel = ViewModelProvider(this)[AuthViewModel::class.java]
 
         authViewModel.loggedInUser.observe(this){
-            if(it?.uid!=null)
+            if(it==null)
                 Navigation.findNavController(
                     this, binding.fragmentContainerView.id
                 ).navigate(R.id.loginFragment)

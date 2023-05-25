@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.vetdoctorapp.R
+import com.example.vetdoctorapp.controller.auth.AuthViewModel
 import com.example.vetdoctorapp.databinding.FragmentLoginBinding
-import com.example.vetdoctorapp.view.auth.AuthViewModel
 
 
 class LoginFragment : Fragment() {
