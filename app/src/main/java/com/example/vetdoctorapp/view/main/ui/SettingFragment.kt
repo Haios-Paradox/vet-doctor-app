@@ -24,16 +24,16 @@ class SettingFragment : Fragment() {
 
         mainViewModel.userData.observe(requireActivity()){user->
             if(user!=null){
+                binding.btnStartSetting.isActivated = user.available==false
                 binding.edLimit.setText(user.limit?:0)
-                binding.swAvailable.isChecked = user.available?:false
-                binding.floatingActionButton.setOnClickListener {
-                    user.available = binding.swAvailable.isChecked
+                binding.edFee.setText((user.fee?:0).toString())
+                binding.btnStartSetting.setOnClickListener {
+                    user.available = true
                     user.limit = binding.edLimit.text.toString().toInt()
                     mainViewModel.updateProfile(user)
                 }
             }
         }
-
 
         return binding.root
     }

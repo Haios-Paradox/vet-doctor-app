@@ -40,7 +40,7 @@ object PatientRepository{
         db.collection(References.USER_COL).document(uid).get()
             .addOnSuccessListener { user ->
                 val queue = user.toObject<User>()?.queue
-                if (queue != null) {
+                if (queue != null && queue.isNotEmpty()) {
                     db.collection(References.APPOINT_COL)
                         .whereIn("id", queue).get()
                         .addOnSuccessListener { appointments ->

@@ -7,6 +7,6 @@ data class Chat(
     val avatar: String ?= null,
     val message: String ?= null,
     val sender: String?= null,
-    val content: String?= null,
+    var content: String?= null, //ANY MEDIA CONTENT ATTACHED
     val timestamp: Long?= null,
 )

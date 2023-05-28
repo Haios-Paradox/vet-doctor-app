@@ -1,7 +1,7 @@
 package com.example.vetdoctorapp.model.data
 
 data class User(
-    val avatar: String ?=null,
+    var avatar: String ?=null,
     val name : String?=null,
     val specialist: String? =null,
     val email: String?=null,

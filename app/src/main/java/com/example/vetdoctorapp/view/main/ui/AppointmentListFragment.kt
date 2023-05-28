@@ -5,15 +5,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.vetdoctorapp.R
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.vetdoctorapp.controller.main.AppointmentAdapter
+import com.example.vetdoctorapp.controller.main.MainViewModel
+import com.example.vetdoctorapp.databinding.FragmentAppointmentListBinding
 
 class AppointmentListFragment : Fragment() {
+    private lateinit var mainViewModel: MainViewModel
+    private lateinit var binding : FragmentAppointmentListBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_appointment_list, container, false)
+        binding = FragmentAppointmentListBinding.inflate(inflater,container,false)
+        binding.rvAppointment.layoutManager = LinearLayoutManager(requireActivity())
+        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
+        mainViewModel.appointmentList.observe(requireActivity()){data->
+            val appointments=data.sortedBy{it.timestamp}
+            binding.rvAppointment.adapter = AppointmentAdapter(appointments)
+        }
+
+        return binding.root
     }
 
 

@@ -9,8 +9,6 @@ import com.example.vetdoctorapp.R
 
 
 class NotesFragment : Fragment() {
-
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,

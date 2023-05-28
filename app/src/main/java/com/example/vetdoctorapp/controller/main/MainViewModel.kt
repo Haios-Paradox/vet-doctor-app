@@ -1,5 +1,7 @@
 package com.example.vetdoctorapp.controller.main
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +11,7 @@ import com.example.vetdoctorapp.model.data.User
 import com.example.vetdoctorapp.model.repositories.PatientRepository
 import com.example.vetdoctorapp.model.repositories.UserRepository
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 
 class MainViewModel : ViewModel(){
 
@@ -21,11 +24,23 @@ class MainViewModel : ViewModel(){
     private val _appointmentList = MutableLiveData<List<Appointment>>()
     val appointmentList: LiveData<List<Appointment>> = _appointmentList
 
+    private val _imageBitmap = MutableLiveData<Bitmap?>()
+    val imageBitmap: LiveData<Bitmap?> = _imageBitmap
+
     init{
         getProfile()
+        getPatients()
     }
 
-    fun getProfile(){
+    fun storeImage(bitmap: Bitmap, quality: Int) {
+        val outputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream)
+        val compressedBitmap =
+            BitmapFactory.decodeByteArray(outputStream.toByteArray(), 0, outputStream.size())
+        _imageBitmap.value = compressedBitmap
+    }
+
+    private fun getProfile(){
         UserRepository.getUserData(
             onSuccess = {
                 _userData.value = it
@@ -40,12 +55,26 @@ class MainViewModel : ViewModel(){
         viewModelScope.launch {
             try{
                 UserRepository.createOrUpdateUserData(user)
+                getProfile()
             }catch (e:Exception){
                 _error.value = e
             }
         }
 
     }
+
+    fun updateProfile(user:User, file:Bitmap){
+        viewModelScope.launch {
+            try{
+                UserRepository.createOrUpdateUserData(user,file)
+            }catch (e:Exception){
+                _error.value = e
+            }
+        }
+
+    }
+
+
 
     fun toggleActive(toggle: Boolean){
         UserRepository.getUserData(

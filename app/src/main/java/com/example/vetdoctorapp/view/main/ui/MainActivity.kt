@@ -34,9 +34,14 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_doctors ->{
-                    Navigation.findNavController(
-                        this, binding.fragmentContainerView2.id
-                    ).navigate(R.id.homeFragment)
+                    if(mainViewModel.userData.value?.available==true)
+                        Navigation.findNavController(
+                            this, binding.fragmentContainerView2.id
+                        ).navigate(R.id.homeFragment)
+                    else
+                        Navigation.findNavController(
+                            this, binding.fragmentContainerView2.id
+                        ).navigate(R.id.settingFragment)
                     true
                 }
                 R.id.navigation_history -> {
