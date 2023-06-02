@@ -1,10 +1,12 @@
 package com.example.vetdoctorapp.model.repositories
 
 import android.graphics.Bitmap
+import com.example.vetdoctorapp.model.data.Appointment
 import com.example.vetdoctorapp.model.data.Chat
 import com.example.vetdoctorapp.model.data.Prescription
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -23,9 +25,9 @@ object AppointmentRepository {
     val appointRef = db.collection(References.APPOINT_COL)
     val currentDate = Date()
 
-    fun getMessages(appointmentId: String, onMessagesChanged: (List<Chat>) -> Unit) {
+    fun getMessages(appointmentId: String, onMessagesChanged: (List<Chat>) -> Unit) : ListenerRegistration {
         val query = appointRef.document(appointmentId).collection(References.CHAT_COL).orderBy("timestamp")
-        query.addSnapshotListener { snapshots, error ->
+        return query.addSnapshotListener { snapshots, error ->
             if (error != null) {
                 return@addSnapshotListener
             }
@@ -54,15 +56,21 @@ object AppointmentRepository {
         appointRef.document(appointmentId).collection(References.CHAT_COL).add(message).await()
     }
 
-    fun getPrescription(
+    fun observeAppointmentDetail(
         appointmentId: String,
-        onSuccess:(Prescription?)->Unit,
+        onUpdate:(Appointment?)->Unit,
         onFailure:(Exception)->Unit
-    ){
-        appointRef.document(appointmentId).get()
-            .addOnSuccessListener{
-                onSuccess(it.toObject())
-            }.addOnFailureListener(onFailure)
+    ):ListenerRegistration {
+        return appointRef.document(appointmentId)
+            .addSnapshotListener { snapshot,e->
+                if (e!=null){
+                    onFailure(Exception(e))
+                    return@addSnapshotListener
+                }
+
+                val appointment=snapshot?.toObject(Appointment::class.java)
+                onUpdate(appointment)
+            }
     }
 
     private suspend fun sendImage(image: Bitmap, appointmentId: String): String {
@@ -91,5 +99,9 @@ object AppointmentRepository {
         prescription:Prescription,
     ) {
         appointRef.document(appointmentId).set(prescription).await()
+    }
+
+    fun getAppointment(){
+
     }
 }

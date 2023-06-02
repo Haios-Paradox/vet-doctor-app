@@ -23,71 +23,41 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
 
-        <EditText
-            android:id="@+id/edAppoName"
+        <TextView
+            android:id="@+id/lblAppoName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline3"
-            app:layout_constraintTop_toBottomOf="@+id/ivPetImage" />
-
-        <TextView
-            android:id="@+id/tvAppoName"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
             android:layout_marginStart="16dp"
             android:gravity="center_vertical"
             android:text="Name"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/edAppoName"
             app:layout_constraintEnd_toStartOf="@id/guideline3"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/edAppoName"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <EditText
-            android:id="@+id/edAppoEmail"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:ems="10"
-            android:inputType="textPersonName|textEmailAddress"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline3"
-            app:layout_constraintTop_toBottomOf="@+id/edAppoName" />
+            tools:layout_editor_absoluteY="224dp" />
 
         <TextView
-            android:id="@+id/tvAppoEmail"
+            android:id="@+id/lblAppoEmail"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:gravity="center_vertical"
             android:text="Email"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/edAppoEmail"
             app:layout_constraintEnd_toStartOf="@id/guideline3"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/edAppoEmail"
-            app:layout_constraintVertical_bias="1.0" />
+            tools:layout_editor_absoluteY="285dp" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.3" />
+            app:layout_constraintGuide_percent="0.2" />
 
         <EditText
-            android:id="@+id/edAppoDescription"
+            android:id="@+id/edAppoNotes"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_marginStart="16dp"
@@ -99,15 +69,55 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            app:layout_constraintTop_toBottomOf="@+id/lblNotes" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/lblNotes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:text="Problem"
-            app:layout_constraintStart_toStartOf="@+id/edAppoDescription"
-            app:layout_constraintTop_toBottomOf="@+id/edAppoEmail" />
+            app:layout_constraintStart_toStartOf="@+id/edAppoNotes"
+            app:layout_constraintTop_toBottomOf="@+id/tvNotesProblem" />
+
+        <TextView
+            android:id="@+id/tvNotesPatient"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="TextView"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/lblAppoName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/lblAppoName"
+            app:layout_constraintTop_toTopOf="@+id/lblAppoName" />
+
+        <TextView
+            android:id="@+id/tvNotesEmail"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="TextView"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/lblAppoEmail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/lblAppoEmail"
+            app:layout_constraintTop_toTopOf="@+id/lblAppoEmail" />
+
+        <TextView
+            android:id="@+id/tvNotesProblem"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="16dp"
+            android:maxLines="5"
+            android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lblAppoEmail" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

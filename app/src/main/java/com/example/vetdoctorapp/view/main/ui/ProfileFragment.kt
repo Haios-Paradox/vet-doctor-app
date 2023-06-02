@@ -87,15 +87,12 @@ class ProfileFragment : Fragment() {
 
     val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            // There are no request codes
             val data: Intent? = result.data
             val imageBitmap = data?.extras?.get("data") as Bitmap
             mainViewModel.storeImage(imageBitmap,100)
         }
     }
     val documentLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        // Handle the result of the file picker intent here
-        // The selected image can be loaded from the URI using a ContentResolver
         val contentResolver = requireActivity().contentResolver
         val imageBitmap = MediaStore.Images.Media.getBitmap(contentResolver, uri)
         mainViewModel.storeImage(imageBitmap, 100)

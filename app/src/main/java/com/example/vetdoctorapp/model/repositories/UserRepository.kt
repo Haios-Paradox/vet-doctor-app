@@ -65,4 +65,8 @@ object UserRepository{
             throw e
         }
     }
+
+    fun logout() {
+        auth.signOut()
+    }
 }

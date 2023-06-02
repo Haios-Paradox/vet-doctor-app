@@ -1,13 +1,11 @@
 package com.example.vetdoctorapp.model.repositories
 
-import com.example.vetdoctorapp.model.data.Appointment
 import com.example.vetdoctorapp.model.data.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 
 object PatientRepository{
@@ -28,7 +26,7 @@ object PatientRepository{
     }
 
     fun getQueue(
-        onSuccess: (List<Appointment>) -> Unit,
+        onSuccess: (List<DocumentSnapshot>) -> Unit,
         onFailure: (Exception) -> Unit
     ) {
         val uid = auth.uid
@@ -44,7 +42,7 @@ object PatientRepository{
                     db.collection(References.APPOINT_COL)
                         .whereIn("id", queue).get()
                         .addOnSuccessListener { appointments ->
-                            onSuccess(appointments.toObjects())
+                            onSuccess(appointments.documents)
                         }
                 }
             }

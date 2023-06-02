@@ -6,10 +6,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.vetdoctorapp.model.data.Appointment
 import com.example.vetdoctorapp.model.data.User
 import com.example.vetdoctorapp.model.repositories.PatientRepository
 import com.example.vetdoctorapp.model.repositories.UserRepository
+import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
@@ -21,8 +21,8 @@ class MainViewModel : ViewModel(){
     private val _userData = MutableLiveData<User?>()
     val userData: LiveData<User?> = _userData
 
-    private val _appointmentList = MutableLiveData<List<Appointment>>()
-    val appointmentList: LiveData<List<Appointment>> = _appointmentList
+    private val _appointmentList = MutableLiveData<List<DocumentSnapshot>>()
+    val appointmentList: LiveData<List<DocumentSnapshot>> = _appointmentList
 
     private val _imageBitmap = MutableLiveData<Bitmap?>()
     val imageBitmap: LiveData<Bitmap?> = _imageBitmap
@@ -89,7 +89,7 @@ class MainViewModel : ViewModel(){
         )
     }
 
-    fun getPatients(){
+    private fun getPatients(){
         PatientRepository.getQueue(
             onSuccess = {
                 _appointmentList.value = it
@@ -98,6 +98,11 @@ class MainViewModel : ViewModel(){
                 _error.value = it
             }
         )
+    }
+
+    fun logout() {
+        UserRepository.logout()
+        _userData.value = null
     }
 
 

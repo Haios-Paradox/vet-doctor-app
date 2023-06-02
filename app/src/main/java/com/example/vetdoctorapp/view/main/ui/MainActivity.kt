@@ -1,6 +1,9 @@
 package com.example.vetdoctorapp.view.main.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -8,6 +11,7 @@ import androidx.navigation.Navigation
 import com.example.vetdoctorapp.R
 import com.example.vetdoctorapp.controller.main.MainViewModel
 import com.example.vetdoctorapp.databinding.ActivityMainBinding
+import com.example.vetdoctorapp.view.auth.ui.AuthActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,6 +25,18 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.error.observe(this){
             Toast.makeText(this,it.message,Toast.LENGTH_SHORT).show()
+        }
+
+        mainViewModel.userData.observe(this){
+            if(it!=null && it.available==true){
+                Navigation.findNavController(
+                    this, binding.fragmentContainerView2.id
+                ).navigate(R.id.homeFragment)
+            }
+            else
+                Navigation.findNavController(
+                    this, binding.fragmentContainerView2.id
+                ).navigate(R.id.settingFragment)
         }
 
         setContentView(binding.root)
@@ -53,5 +69,30 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.logout -> {
+                mainViewModel.logout()
+                startActivity(
+                    Intent(this, AuthActivity::class.java).apply {
+                        addFlags(
+                            Intent.FLAG_ACTIVITY_CLEAR_TOP or
+                                    Intent.FLAG_ACTIVITY_NEW_TASK or
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        )
+                    }
+                )
+            }
+
+        }
+        return true
     }
 }

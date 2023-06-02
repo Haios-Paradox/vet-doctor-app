@@ -8,8 +8,8 @@ data class User(
     val phone: String?=null,
     val experience: String?=null,
     val description: String?=null,
-    val fee: Double?=null,
-    var limit: Int?=null,
+    var fee: Double?=null,
+    var limit: Int?=0,
     var available : Boolean?=false,
     val queue: List<String>?= emptyList(),
 )

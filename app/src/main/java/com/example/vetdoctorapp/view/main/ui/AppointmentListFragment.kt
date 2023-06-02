@@ -23,8 +23,7 @@ class AppointmentListFragment : Fragment() {
         binding.rvAppointment.layoutManager = LinearLayoutManager(requireActivity())
         mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
         mainViewModel.appointmentList.observe(requireActivity()){data->
-            val appointments=data.sortedBy{it.timestamp}
-            binding.rvAppointment.adapter = AppointmentAdapter(appointments)
+            binding.rvAppointment.adapter = AppointmentAdapter(data)
         }
 
         return binding.root

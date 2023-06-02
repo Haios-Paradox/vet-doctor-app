@@ -5,8 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vetdoctorapp.databinding.ItemRowAppointmentBinding
 import com.example.vetdoctorapp.model.data.Appointment
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.ktx.toObject
 
-class AppointmentAdapter(private val appointment: List<Appointment>): RecyclerView.Adapter<ViewHolderAppointment>() {
+class AppointmentAdapter(private val appointment: List<DocumentSnapshot>): RecyclerView.Adapter<ViewHolderAppointment>() {
+
+    val appointments = appointment.map{it.toObject<Appointment>()}.sortedBy { it?.timestamp }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderAppointment {
         val binding = ItemRowAppointmentBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -24,9 +28,9 @@ class AppointmentAdapter(private val appointment: List<Appointment>): RecyclerVi
     override fun onBindViewHolder(holder: ViewHolderAppointment, position: Int) {
         with(holder){
             with(binding){
-                tvRowAppoDesc.text = appointment[position].description
-                tvRowAppoName.text = appointment[position].patientName
-                if(appointment[position].complete==true)
+                tvRowAppoDesc.text = appointments[position]?.description
+                tvRowAppoName.text = appointments[position]?.patientName
+                if(appointments[position]?.complete==true)
                     tvStatus.text = "COMPLETE"
                 else
                     tvStatus.text = "ONGOING"
