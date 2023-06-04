@@ -3,6 +3,7 @@ package com.example.vetdoctorapp.controller.diagnosis
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.vetdoctorapp.databinding.ItemRowChatBinding
 import com.example.vetdoctorapp.model.data.Chat
 
@@ -25,6 +26,7 @@ class ChatAdapter(private val messages: List<Chat>) :
     override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
         with(holder){
             with(binding){
+                Glide.with(ivSender).load(messages[position].avatar).into(ivSender)
                 tvSenderName.text = messages[position].name
                 tvSenderContent.text = messages[position].message
             }
