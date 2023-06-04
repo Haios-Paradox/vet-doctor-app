@@ -1,8 +1,8 @@
 package com.example.vetdoctorapp.model.data
 
 data class Prescription(
-    val appointmentId: String,
-    val name: String, //Doctor's Name
-    val analysis: String,
-    val treatment: String
+    var appointmentId: String?=null,
+    var name: String?=null, //Doctor's Name
+    var analysis: String?=null,
+    var treatment: String?=null
 )

@@ -10,7 +10,15 @@ import com.google.firebase.firestore.ktx.toObject
 
 class AppointmentAdapter(private val appointment: List<DocumentSnapshot>): RecyclerView.Adapter<ViewHolderAppointment>() {
 
-    val appointments = appointment.map{it.toObject<Appointment>()}.sortedBy { it?.timestamp }
+    private val appointments = appointment.map{it.toObject<Appointment>()}.sortedBy { it?.timestamp }
+
+    private lateinit var onItemClickCallback: OnItemClickCallback
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
+        this.onItemClickCallback = onItemClickCallback
+    }
+    interface OnItemClickCallback{
+        fun onItemClicked(data: Appointment)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolderAppointment {
         val binding = ItemRowAppointmentBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -34,6 +42,10 @@ class AppointmentAdapter(private val appointment: List<DocumentSnapshot>): Recyc
                     tvStatus.text = "COMPLETE"
                 else
                     tvStatus.text = "ONGOING"
+
+                root.setOnClickListener {
+                    onItemClickCallback.onItemClicked(appointments[position]!!)
+                }
             }
         }
     }

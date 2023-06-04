@@ -3,8 +3,8 @@ package com.example.vetdoctorapp.model.repositories
 import android.graphics.Bitmap
 import com.example.vetdoctorapp.model.data.Appointment
 import com.example.vetdoctorapp.model.data.Chat
-import com.example.vetdoctorapp.model.data.Prescription
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
@@ -23,6 +23,7 @@ object AppointmentRepository {
     private val storage = Firebase.storage
     private val storageRef = storage.reference
     val appointRef = db.collection(References.APPOINT_COL)
+    val userRef = db.collection(References.USER_COL)
     val currentDate = Date()
 
     fun getMessages(appointmentId: String, onMessagesChanged: (List<Chat>) -> Unit) : ListenerRegistration {
@@ -94,14 +95,26 @@ object AppointmentRepository {
         }
     }
 
-    suspend fun updatePrescription(
-        appointmentId: String,
-        prescription:Prescription,
+    suspend fun updateAppointment(
+        appointment:Appointment,
     ) {
-        appointRef.document(appointmentId).set(prescription).await()
+        appointRef.document(appointment.id!!).set(appointment).await()
     }
 
-    fun getAppointment(){
+    fun endTreatment(
+        appointmentId: String,
+        onSuccess:(String)->Unit,
+        onFailure:(Exception)->Unit)
+    {
+        appointRef.document(appointmentId).get().addOnSuccessListener {
+            val appointment = it.toObject<Appointment>()
+            appointment!!.complete = true
+            userRef.document(auth.uid!!).update(
+                "queue", FieldValue.arrayRemove(appointmentId)
+            ).addOnSuccessListener{
+                onSuccess("String")
+            }.addOnFailureListener(onFailure)
+        }.addOnFailureListener(onFailure)
 
     }
 }

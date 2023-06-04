@@ -37,7 +37,7 @@ class HomeFragment : Fragment() {
                 sortedAppointments[it.key] = it.value
             }
 
-            setupView(sortedAppointments[sortedAppointments.keys.first()]!!, sortedAppointments.keys.first())
+            setupView(sortedAppointments[sortedAppointments.keys.last()]!!, sortedAppointments.keys.last())
 
         }
 
