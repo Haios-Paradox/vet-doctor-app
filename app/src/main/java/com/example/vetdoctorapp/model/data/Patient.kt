@@ -3,6 +3,7 @@ package com.example.vetdoctorapp.model.data
 import java.sql.Date
 
 data class Patient(
+    val id: String?=null,
     val name: String?=null,
     val email: String?=null,
     val phone: String?=null,

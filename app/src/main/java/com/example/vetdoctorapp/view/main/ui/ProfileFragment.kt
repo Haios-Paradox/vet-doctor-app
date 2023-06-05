@@ -59,7 +59,7 @@ class ProfileFragment : Fragment() {
         val user = User(
             avatar = mainViewModel.userData.value?.avatar,
             name = binding.edProfileName.text.toString(),
-            specialist = binding.edProfileSpec.text.toString(),
+            specialist = binding.edProfileSpec.selectedItem.toString(),
             email = binding.edProfileEmail.text.toString(),
             phone = binding.edHomePhone.text.toString(),
             experience = binding.edProfileExperience.text.toString(),
@@ -80,7 +80,6 @@ class ProfileFragment : Fragment() {
             edProfileEmail.setText(user.email)
             edProfileExperience.setText(user.experience)
             edHomePhone.setText(user.phone)
-            edProfileSpec.setText(user.specialist)
             edProfileDesc.setText(user.description)
         }
     }
