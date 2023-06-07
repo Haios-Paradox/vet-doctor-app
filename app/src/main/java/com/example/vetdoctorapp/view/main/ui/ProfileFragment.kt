@@ -59,6 +59,7 @@ class ProfileFragment : Fragment() {
 
     private fun saveData() {
         val user = User(
+            id = mainViewModel.userData.value?.id,
             avatar = mainViewModel.userData.value?.avatar,
             name = binding.edProfileName.text.toString(),
             specialist = binding.edProfileSpec.selectedItem.toString(),

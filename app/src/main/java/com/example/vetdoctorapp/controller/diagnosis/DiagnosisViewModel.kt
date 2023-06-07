@@ -26,6 +26,8 @@ class DiagnosisViewModel(val appointmentId: String) : ViewModel(){
     private val _user = MutableLiveData<User>()
     val user: LiveData<User> = _user
 
+    val finished = MutableLiveData<Boolean>()
+
     init{
         getAppointment()
         loadChats()
@@ -91,7 +93,7 @@ class DiagnosisViewModel(val appointmentId: String) : ViewModel(){
         AppointmentRepository.endTreatment(
             appointmentId,
             onSuccess = {
-                getAppointment()
+                finished.value = true
             },
             onFailure = {
 

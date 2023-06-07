@@ -15,10 +15,10 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_marginTop="16dp"
+            android:src="@drawable/ic_profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvHomeCurrent"
-            android:src="@drawable/ic_profile" />
+            app:layout_constraintTop_toBottomOf="@+id/tvHomeCurrent" />
 
         <TextView
             android:id="@+id/tvHomeCurrent"
@@ -26,6 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:text="Waiting For Patient"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +37,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="N/A"
             app:layout_constraintEnd_toEndOf="@+id/tvHomePatientPhoto"
             app:layout_constraintStart_toStartOf="@+id/tvHomePatientPhoto"
             app:layout_constraintTop_toBottomOf="@+id/tvHomePatientPhoto" />
@@ -45,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="N/A"
+            android:maxLines="4"
             app:layout_constraintEnd_toEndOf="@+id/tvHomePatientName"
             app:layout_constraintStart_toStartOf="@+id/tvHomePatientName"
             app:layout_constraintTop_toBottomOf="@+id/tvHomePatientName" />
@@ -55,11 +56,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Button"
+            android:text="Check Patient"
             app:layout_constraintEnd_toEndOf="@+id/tvHomePatientDesc"
             app:layout_constraintStart_toStartOf="@+id/tvHomePatientDesc"
-            app:layout_constraintTop_toBottomOf="@+id/tvHomePatientDesc"
-            android:clickable="false"/>
+            app:layout_constraintTop_toBottomOf="@+id/tvHomePatientDesc" />
+
+        <Button
+            android:id="@+id/btnEndShift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="End Shift"
+            app:layout_constraintEnd_toEndOf="@+id/btnCheckPatient"
+            app:layout_constraintStart_toStartOf="@+id/btnCheckPatient"
+            app:layout_constraintTop_toBottomOf="@+id/btnCheckPatient" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

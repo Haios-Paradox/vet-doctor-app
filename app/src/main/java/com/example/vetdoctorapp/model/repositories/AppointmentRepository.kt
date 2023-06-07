@@ -112,9 +112,23 @@ object AppointmentRepository {
             userRef.document(auth.uid!!).update(
                 "queue", FieldValue.arrayRemove(appointmentId)
             ).addOnSuccessListener{
-                onSuccess("String")
+                userRef.document(auth.uid!!).update(
+                    "finished_queue", FieldValue.arrayUnion(appointmentId)
+                ).addOnSuccessListener {
+                    onSuccess("Treatment Finished!")
+                }.addOnFailureListener(onFailure)
             }.addOnFailureListener(onFailure)
         }.addOnFailureListener(onFailure)
+
+    }
+
+    suspend fun endShift():Result<String> {
+        try{
+            userRef.document(auth.uid!!).update("available",false).await()
+            return Result.success("Success!")
+        }catch (e:Exception){
+            return Result.failure(e)
+        }
 
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -23,6 +24,14 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentHomeBinding.inflate(inflater,container,false)
+
+        binding.btnCheckPatient.setOnClickListener {
+            Toast.makeText(requireActivity(),"Waiting for Patient",Toast.LENGTH_SHORT).show()
+        }
+        binding.btnEndShift.setOnClickListener {
+            mainViewModel.endShift()
+        }
+
         mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
         mainViewModel.appointmentList.observe(requireActivity()) { data ->
             val appointments: MutableMap<String, Appointment> = mutableMapOf()
@@ -36,24 +45,28 @@ class HomeFragment : Fragment() {
             appointments.toSortedMap(compareByDescending { appointments[it]!!.timestamp }).forEach {
                 sortedAppointments[it.key] = it.value
             }
-
-            setupView(sortedAppointments[sortedAppointments.keys.last()]!!, sortedAppointments.keys.last())
+            setupView(sortedAppointments[sortedAppointments.keys.last()], sortedAppointments.keys.last())
 
         }
 
         return binding.root
     }
 
-    private fun setupView(appointment: Appointment, appoId:String) {
-        binding.tvHomePatientName.text = appointment.patientName
-        binding.tvHomePatientDesc.text = appointment.description
-        Glide.with(binding.tvHomePatientPhoto).load(appointment.photo).into(binding.tvHomePatientPhoto)
-        binding.tvHomeCurrent.text = "Current Patient"
-        binding.btnCheckPatient.setOnClickListener {
-            startActivity(
-                Intent(requireActivity(), DiagnosisActivity::class.java)
-                    .putExtra(DiagnosisActivity.APPO_ID, appoId)
-            )
+    private fun setupView(appointment: Appointment?, appoId:String) {
+        if (appointment != null) {
+            binding.tvHomePatientName.text = appointment.patientName
+            binding.tvHomePatientDesc.text = appointment.description
+            Glide.with(binding.tvHomePatientPhoto).load(appointment.photo).into(binding.tvHomePatientPhoto)
+            binding.tvHomeCurrent.text = "Current Patient"
+            binding.btnCheckPatient.setOnClickListener {
+                startActivity(
+                    Intent(requireActivity(), DiagnosisActivity::class.java)
+                        .putExtra(DiagnosisActivity.APPO_ID, appoId)
+                )
+            }
+            binding.btnEndShift.setOnClickListener {
+                Toast.makeText(requireActivity(),"Please Finish All Patient First",Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

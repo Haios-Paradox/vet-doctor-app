@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="specialty_array">
+        <item>Cat</item>
+        <item>Dog</item>
+        <item>horse</item>
+        <item>Fish</item>
+        <item>Turtle</item>
+        <item>Bird</item>
+    </string-array>
+
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+</resources>

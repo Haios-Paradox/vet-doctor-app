@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vetdoctorapp.model.data.User
+import com.example.vetdoctorapp.model.repositories.AppointmentRepository
 import com.example.vetdoctorapp.model.repositories.PatientRepository
 import com.example.vetdoctorapp.model.repositories.UserRepository
 import com.google.firebase.firestore.DocumentSnapshot
@@ -55,7 +56,6 @@ class MainViewModel : ViewModel(){
         viewModelScope.launch {
             try{
                 UserRepository.createOrUpdateUserData(user)
-                getProfile()
             }catch (e:Exception){
                 _error.value = e
             }
@@ -74,21 +74,6 @@ class MainViewModel : ViewModel(){
 
     }
 
-
-
-    fun toggleActive(toggle: Boolean){
-        UserRepository.getUserData(
-            onSuccess = {
-                val user = it
-                if(user!=null)
-                    user.available = toggle
-                else return@getUserData
-            }, onFailure = {
-                _error.value = it
-            }
-        )
-    }
-
     private fun getPatients(){
         PatientRepository.getQueue(
             onSuccess = {
@@ -103,6 +88,17 @@ class MainViewModel : ViewModel(){
     fun logout() {
         UserRepository.logout()
         _userData.value = null
+    }
+
+    fun endShift() {
+        viewModelScope.launch {
+            try {
+                AppointmentRepository.endShift()
+            }catch (e:Exception){
+                _error.value = e
+            }
+        }
+
     }
 
 

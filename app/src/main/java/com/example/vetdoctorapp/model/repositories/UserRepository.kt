@@ -1,9 +1,11 @@
 package com.example.vetdoctorapp.model.repositories
 
 import android.graphics.Bitmap
+import com.example.vetdoctorapp.model.data.Chat
 import com.example.vetdoctorapp.model.data.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -28,12 +30,28 @@ object UserRepository{
             onFailure(Exception("User Not Logged In"))
             return
         }
-        db.collection(References.USER_COL).document(uid).get()
-            .addOnSuccessListener {
-                val user = it.toObject<User>()
+        db.collection(References.USER_COL).document(uid)
+            .addSnapshotListener {snapshot,error ->
+                val user = snapshot?.toObject<User>()
                 onSuccess(user)
             }
-            .addOnFailureListener(onFailure)
+    }
+
+    fun getMessages(appointmentId: String, onMessagesChanged: (List<Chat>) -> Unit) : ListenerRegistration {
+        val query = AppointmentRepository.appointRef.document(appointmentId).collection(References.CHAT_COL).orderBy("timestamp")
+        return query.addSnapshotListener { snapshots, error ->
+            if (error != null) {
+                return@addSnapshotListener
+            }
+
+            val messages = mutableListOf<Chat>()
+            if (snapshots != null) {
+                for (doc in snapshots) {
+                    messages.add(doc.toObject())
+                }
+            }
+            onMessagesChanged(messages)
+        }
     }
 
     suspend fun createOrUpdateUserData(
