@@ -55,6 +55,10 @@ class DiagnosisActivity : AppCompatActivity() {
         }
     }
 
+    //TODO: After Ending, return to Home
+    //TODO: Loading Signal
+    //TODO: Go grab the report from Playen
+
 
     companion object{
         const val APPO_ID = "appo_id"

@@ -1,5 +1,7 @@
 package com.example.vetdoctorapp.controller.diagnosis
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.lifecycle.*
 import com.example.vetdoctorapp.model.data.Appointment
 import com.example.vetdoctorapp.model.data.Chat
@@ -9,6 +11,7 @@ import com.example.vetdoctorapp.model.repositories.UserRepository
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.ListenerRegistration
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
 
 class DiagnosisViewModel(val appointmentId: String) : ViewModel(){
     var appointmentReg : ListenerRegistration? = null
@@ -25,6 +28,9 @@ class DiagnosisViewModel(val appointmentId: String) : ViewModel(){
 
     private val _user = MutableLiveData<User>()
     val user: LiveData<User> = _user
+
+    private val _imageBitmap = MutableLiveData<Bitmap?>()
+    val imageBitmap: LiveData<Bitmap?> = _imageBitmap
 
     val finished = MutableLiveData<Boolean>()
 
@@ -50,17 +56,20 @@ class DiagnosisViewModel(val appointmentId: String) : ViewModel(){
             _chatData.value = it
         }
     }
-
     fun sendChat(message: Chat){
         viewModelScope.launch {
             try {
-                AppointmentRepository.sendMessage(appointmentId,message)
+                if(imageBitmap.value==null)
+                    AppointmentRepository.sendMessage(appointmentId,message)
+                else
+                    AppointmentRepository.sendMessage(appointmentId,message, imageBitmap.value!!)
+                _imageBitmap.value = null
             }catch (e: FirebaseFirestoreException) {
                 _error.value = e
             }
         }
-
     }
+
 
     fun getAppointment(){
         appointmentReg = AppointmentRepository.observeAppointmentDetail(
@@ -99,6 +108,14 @@ class DiagnosisViewModel(val appointmentId: String) : ViewModel(){
 
             }
         )
+    }
+
+    fun storeImage(bitmap: Bitmap, quality: Int) {
+        val outputStream = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream)
+        val compressedBitmap =
+            BitmapFactory.decodeByteArray(outputStream.toByteArray(), 0, outputStream.size())
+        _imageBitmap.value = compressedBitmap
     }
 }
 

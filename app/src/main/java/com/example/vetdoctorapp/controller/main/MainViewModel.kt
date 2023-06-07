@@ -45,6 +45,7 @@ class MainViewModel : ViewModel(){
         UserRepository.getUserData(
             onSuccess = {
                 _userData.value = it
+                getPatients()
             },
             onFailure = {
                 _error.value = it
