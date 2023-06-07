@@ -30,7 +30,7 @@ class MainViewModel : ViewModel(){
 
     init{
         getProfile()
-        getPatients()
+//        getPatients()
     }
 
     fun storeImage(bitmap: Bitmap, quality: Int) {

@@ -33,6 +33,7 @@ class PrescriptionFragment : Fragment() {
                 binding.edAnalysis.text.toString(),
                 binding.edTreatment.text.toString()
             )
+            requireActivity().finish()
         }
         return binding.root
     }

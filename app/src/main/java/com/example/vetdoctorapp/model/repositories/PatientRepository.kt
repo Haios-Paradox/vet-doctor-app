@@ -25,8 +25,10 @@ object PatientRepository{
             .addOnFailureListener(onFailure)
     }
 
+    //TODO: Also make this realtime, good lord...
+
     fun getQueue(
-        onSuccess: (List<DocumentSnapshot>) -> Unit,
+        onSuccess: (List<DocumentSnapshot>?) -> Unit,
         onFailure: (Exception) -> Unit
     ) {
         val uid = auth.uid
@@ -45,6 +47,8 @@ object PatientRepository{
                             onSuccess(appointments.documents)
                         }
                 }
+                else
+                    onSuccess(null)
             }
             .addOnFailureListener(onFailure)
     }
