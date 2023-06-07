@@ -3,6 +3,7 @@ package com.example.vetdoctorapp.controller.main
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.vetdoctorapp.databinding.ItemRowAppointmentBinding
 import com.example.vetdoctorapp.model.data.Appointment
 import com.google.firebase.firestore.DocumentSnapshot
@@ -36,6 +37,7 @@ class AppointmentAdapter(private val appointment: List<DocumentSnapshot>): Recyc
     override fun onBindViewHolder(holder: ViewHolderAppointment, position: Int) {
         with(holder){
             with(binding){
+                Glide.with(imageView3).load(appointments[position]?.photo).circleCrop().into(imageView3)
                 tvRowAppoDesc.text = appointments[position]?.description
                 tvRowAppoName.text = appointments[position]?.patientName
                 if(appointments[position]?.complete==true)

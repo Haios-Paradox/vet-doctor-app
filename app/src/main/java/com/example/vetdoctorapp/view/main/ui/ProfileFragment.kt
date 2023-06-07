@@ -22,6 +22,8 @@ import com.example.vetdoctorapp.model.data.User
 
 class ProfileFragment : Fragment() {
 
+    //TODO: Make user go here first, complete profile validation.
+
     private lateinit var mainViewModel: MainViewModel
     private lateinit var binding : FragmentProfileBinding
     private val cameraPermission = android.Manifest.permission.CAMERA
