@@ -20,7 +20,14 @@ class RegisterFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        authViewModel = ViewModelProvider(requireActivity())[AuthViewModel::class.java]
+        authViewModel = ViewModelProvider(requireActivity())[AuthViewModel::class.java].also {
+            it.loading.observe(requireActivity()) {
+                if (it)
+                    binding.progressBar8.visibility = View.GONE
+                else
+                    binding.progressBar8.visibility = View.VISIBLE
+            }
+        }
         binding = FragmentRegisterBinding.inflate(inflater,container,false)
 
         binding.buttonRegister.setOnClickListener {

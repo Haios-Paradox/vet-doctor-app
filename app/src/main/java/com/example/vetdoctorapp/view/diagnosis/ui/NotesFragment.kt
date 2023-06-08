@@ -19,7 +19,14 @@ class NotesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        diagnosisViewModel = ViewModelProvider(requireActivity())[DiagnosisViewModel::class.java]
+        diagnosisViewModel = ViewModelProvider(requireActivity())[DiagnosisViewModel::class.java].also {
+            it.loading.observe(requireActivity()) {
+                if (it)
+                    binding.progressBar4.visibility = View.GONE
+                else
+                    binding.progressBar4.visibility = View.VISIBLE
+            }
+        }
         binding = FragmentNotesBinding.inflate(inflater,container,false)
 
         diagnosisViewModel.appointment.observe(requireActivity()){

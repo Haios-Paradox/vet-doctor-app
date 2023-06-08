@@ -24,7 +24,14 @@ class AppointmentListFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentAppointmentListBinding.inflate(inflater,container,false)
         binding.rvAppointment.layoutManager = LinearLayoutManager(requireActivity())
-        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
+        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java].also {
+            it.loading.observe(requireActivity()) {
+                if (it)
+                    binding.progressBar.visibility = View.GONE
+                else
+                    binding.progressBar.visibility = View.VISIBLE
+            }
+        }
         mainViewModel.appointmentList.observe(requireActivity()){data->
             val adapter = AppointmentAdapter(data)
             binding.rvAppointment.adapter = adapter

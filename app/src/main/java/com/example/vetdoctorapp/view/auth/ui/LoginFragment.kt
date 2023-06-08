@@ -21,7 +21,14 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        authViewModel = ViewModelProvider(requireActivity())[AuthViewModel::class.java]
+        authViewModel = ViewModelProvider(requireActivity())[AuthViewModel::class.java].also {
+            it.loading.observe(requireActivity()) {
+                if (it)
+                    binding.progressBar3.visibility = View.GONE
+                else
+                    binding.progressBar3.visibility = View.VISIBLE
+            }
+        }
         binding = FragmentLoginBinding.inflate(inflater,container,false)
         // Inflate the layout for this fragment
 

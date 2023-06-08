@@ -33,7 +33,14 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View{
 
-        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
+        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java].also {
+            it.loading.observe(requireActivity()) {
+                if (it)
+                    binding.progressBar6.visibility = View.GONE
+                else
+                    binding.progressBar6.visibility = View.VISIBLE
+            }
+        }
         binding = FragmentProfileBinding.inflate(inflater,container,false)
         binding.ivProfileImage.setOnClickListener {
             dispatchTakePictureIntent()

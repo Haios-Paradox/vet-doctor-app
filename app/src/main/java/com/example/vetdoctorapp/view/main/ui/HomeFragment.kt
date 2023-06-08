@@ -26,7 +26,14 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater,container,false)
 
-        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
+        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java].also {
+            it.loading.observe(requireActivity()) {
+                if (it)
+                    binding.progressBar2.visibility = View.GONE
+                else
+                    binding.progressBar2.visibility = View.VISIBLE
+            }
+        }
         mainViewModel.appointmentList.observe(requireActivity()) { data ->
             if(data!=null){
                 val appointments: MutableMap<String, Appointment> = mutableMapOf()

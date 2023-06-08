@@ -20,7 +20,14 @@ class SettingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
+        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java].also {
+            it.loading.observe(requireActivity()) {
+                if (it)
+                    binding.progressBar7.visibility = View.GONE
+                else
+                    binding.progressBar7.visibility = View.VISIBLE
+            }
+        }
         binding = FragmentSettingBinding.inflate(inflater,container,false)
 
         mainViewModel.message.observe(requireActivity()){ user->

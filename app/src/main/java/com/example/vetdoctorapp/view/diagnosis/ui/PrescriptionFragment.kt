@@ -19,7 +19,14 @@ class PrescriptionFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
 
-        diagnosisViewModel = ViewModelProvider(requireActivity())[DiagnosisViewModel::class.java]
+        diagnosisViewModel = ViewModelProvider(requireActivity())[DiagnosisViewModel::class.java].also {
+            it.loading.observe(requireActivity()) {
+                if (it)
+                    binding.progressBar5.visibility = View.GONE
+                else
+                    binding.progressBar5.visibility = View.VISIBLE
+            }
+        }
         binding = FragmentPrescriptionBinding.inflate(inflater,container,false)
 
         binding.btnPresSave.setOnClickListener {
