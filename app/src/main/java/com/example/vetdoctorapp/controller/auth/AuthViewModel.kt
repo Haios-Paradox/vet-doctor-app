@@ -8,11 +8,13 @@ import com.example.vetdoctorapp.model.repositories.AuthRepository
 
 class AuthViewModel: ViewModel() {
 
-    private val _error = MutableLiveData<Exception>()
-    val error: LiveData<Exception> = _error
+    private val _message = MutableLiveData<String>()
+    val message: LiveData<String> = _message
 
     private val _loggedInUser = MutableLiveData<String?>()
     val loggedInUser: MutableLiveData<String?> = _loggedInUser
+
+    val loading = MutableLiveData<Boolean>()
 
     init{
         autoLogin()
@@ -23,23 +25,31 @@ class AuthViewModel: ViewModel() {
     }
 
     fun login(email:String, pass:String){
+        loading.value = true
         AuthRepository.login(
             email,pass,
             onSuccess = {
                 autoLogin()
+                loading.value = false
             },
-            onFailure = {
-                _error.value = it
+            onFailure = {e->
+                _message.value = e.cause?.message?:e.message?:"There was an error"
+                loading.value = false
             }
         )
     }
 
     fun register(email:String, pass:String, userData: User){
-        AuthRepository.register(userData,email,pass){_, exception ->
-            if(exception==null)
-                login(email,pass)
-            else
-                _error.value = exception
+        loading.value = true
+        AuthRepository.register(userData,email,pass){_, e ->
+            if(e==null) {
+                login(email, pass)
+                loading.value = false
+            }
+            else {
+                _message.value = e.cause?.message?:e.message?:"There was an error"
+                loading.value = false
+            }
         }
     }
 }

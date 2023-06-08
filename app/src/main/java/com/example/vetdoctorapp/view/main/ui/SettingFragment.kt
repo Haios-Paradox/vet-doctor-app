@@ -23,7 +23,7 @@ class SettingFragment : Fragment() {
         mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
         binding = FragmentSettingBinding.inflate(inflater,container,false)
 
-        mainViewModel.userData.observe(requireActivity()){user->
+        mainViewModel.message.observe(requireActivity()){ user->
             if(user!=null){
                 binding.btnStartSetting.setOnClickListener {
                     if(

@@ -17,8 +17,8 @@ class DiagnosisViewModel(val appointmentId: String) : ViewModel(){
     var appointmentReg : ListenerRegistration? = null
     var chatReg : ListenerRegistration? =null
 
-    private val _error = MutableLiveData<Exception>()
-    val error: LiveData<Exception> = _error
+    private val _message = MutableLiveData<String>()
+    val message: LiveData<String> = _message
 
     private val _chatData = MutableLiveData<List<Chat>>()
     val chatData: LiveData<List<Chat>> = _chatData
@@ -34,6 +34,8 @@ class DiagnosisViewModel(val appointmentId: String) : ViewModel(){
 
     val finished = MutableLiveData<Boolean>()
 
+    val loading = MutableLiveData<Boolean>()
+
     init{
         getAppointment()
         loadChats()
@@ -41,12 +43,15 @@ class DiagnosisViewModel(val appointmentId: String) : ViewModel(){
     }
 
     fun getUser(){
+        loading.value = true
         UserRepository.getUserData(
             onSuccess = {
                 _user.value = it
+                loading.value = false
             },
-            onFailure = {
-                _error.value = it
+            onFailure = {e->
+                _message.value = e.cause?.message?:e.message?:"There was an error"
+                loading.value = false
             }
         )
     }
@@ -65,20 +70,23 @@ class DiagnosisViewModel(val appointmentId: String) : ViewModel(){
                     AppointmentRepository.sendMessage(appointmentId,message, imageBitmap.value!!)
                 _imageBitmap.value = null
             }catch (e: FirebaseFirestoreException) {
-                _error.value = e
+                _message.value = e.cause?.message?:e.message?:"There was an error"
             }
         }
     }
 
 
     fun getAppointment(){
+        loading.value = true
         appointmentReg = AppointmentRepository.observeAppointmentDetail(
             appointmentId,
             onUpdate = {
                 _appointment.value = it
+                loading.value = false
             },
-            onFailure = {
-                _error.value = it
+            onFailure = {e->
+                _message.value = e.cause?.message?:e.message?:"There was an error"
+                loading.value = false
             }
         )
     }
@@ -86,26 +94,32 @@ class DiagnosisViewModel(val appointmentId: String) : ViewModel(){
     fun updatePrescription(analysis:String, treatment:String){
         viewModelScope.launch {
             try{
+                loading.value = true
                 val appointment = appointment.value
                 appointment!!.analysis = analysis
                 appointment.treatment = treatment
                 AppointmentRepository.updateAppointment(appointment)
+                loading.value = false
             }catch (e:Exception){
-                _error.value = e
+                _message.value = e.cause?.message?:e.message?:"There was an error"
+                loading.value = false
             }
         }
 
     }
 
     fun endCheckUp(analysis:String, treatment:String){
+        loading.value = true
         updatePrescription(analysis, treatment)
         AppointmentRepository.endTreatment(
             appointmentId,
             onSuccess = {
                 finished.value = true
+                loading.value = false
             },
-            onFailure = {
-
+            onFailure = {e->
+                loading.value = false
+                _message.value = e.cause?.message?:e.message?:"There was an error"
             }
         )
     }

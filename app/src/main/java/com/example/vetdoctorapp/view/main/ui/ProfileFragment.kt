@@ -22,8 +22,6 @@ import com.example.vetdoctorapp.model.data.User
 
 class ProfileFragment : Fragment() {
 
-    //TODO: Make user go here first, complete profile validation.
-
     private lateinit var mainViewModel: MainViewModel
     private lateinit var binding : FragmentProfileBinding
     private val cameraPermission = android.Manifest.permission.CAMERA
@@ -46,7 +44,7 @@ class ProfileFragment : Fragment() {
                 Glide.with(binding.ivProfileImage).load(it).into(binding.ivProfileImage)
         }
 
-        mainViewModel.userData.observe(requireActivity()){
+        mainViewModel.message.observe(requireActivity()){
             if (it!=null)
                 setupView(it)
         }
@@ -59,8 +57,8 @@ class ProfileFragment : Fragment() {
 
     private fun saveData() {
         val user = User(
-            id = mainViewModel.userData.value?.id,
-            avatar = mainViewModel.userData.value?.avatar,
+            id = mainViewModel.message.value?.id,
+            avatar = mainViewModel.message.value?.avatar,
             name = binding.edProfileName.text.toString(),
             specialist = binding.edProfileSpec.selectedItem.toString(),
             email = binding.edProfileEmail.text.toString(),

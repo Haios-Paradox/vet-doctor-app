@@ -37,8 +37,8 @@ class AuthActivity : AppCompatActivity() {
                 )
         }
 
-        authViewModel.error.observe(this){
-            Toast.makeText(this,it.message, Toast.LENGTH_SHORT).show()
+        authViewModel.message.observe(this){
+            Toast.makeText(this,it, Toast.LENGTH_SHORT).show()
         }
 
         setContentView(binding.root)

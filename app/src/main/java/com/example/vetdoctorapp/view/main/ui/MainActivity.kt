@@ -14,6 +14,7 @@ import com.example.vetdoctorapp.databinding.ActivityMainBinding
 import com.example.vetdoctorapp.view.auth.ui.AuthActivity
 
 class MainActivity : AppCompatActivity() {
+    //TODO: Make a new layout to handle payment
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var binding : ActivityMainBinding
@@ -23,11 +24,11 @@ class MainActivity : AppCompatActivity() {
         mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
         binding = ActivityMainBinding.inflate(layoutInflater)
 
-        mainViewModel.error.observe(this){
-            Toast.makeText(this,it.message,Toast.LENGTH_SHORT).show()
+        mainViewModel.msg.observe(this){
+            Toast.makeText(this,it,Toast.LENGTH_SHORT).show()
         }
 
-        mainViewModel.userData.observe(this){
+        mainViewModel.message.observe(this){
             if(it!=null && it.available==true){
                 Navigation.findNavController(
                     this, binding.fragmentContainerView2.id
@@ -50,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_doctors ->{
-                    if(mainViewModel.userData.value?.available==true)
+                    if(mainViewModel.message.value?.available==true)
                         Navigation.findNavController(
                             this, binding.fragmentContainerView2.id
                         ).navigate(R.id.homeFragment)

@@ -1,6 +1,7 @@
 package com.example.vetdoctorapp.view.diagnosis.ui
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -21,7 +22,11 @@ class DiagnosisActivity : AppCompatActivity() {
 
         binding = ActivityDiagnosisBinding.inflate(layoutInflater)
         if (appoId != null) {
-            diagnosisViewModel = ViewModelProvider(this, ViewModelFactory(appoId))[DiagnosisViewModel::class.java]
+            diagnosisViewModel = ViewModelProvider(this, ViewModelFactory(appoId))[DiagnosisViewModel::class.java].also{
+                it.message.observe(this){
+                    Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                }
+            }
             setupNav()
         }else{
             finish()
@@ -54,10 +59,8 @@ class DiagnosisActivity : AppCompatActivity() {
             }
         }
     }
-
-    //TODO: After Ending, return to Home
-    //TODO: Loading Signal
-    //TODO: Go grab the report from Playen
+    
+    //TODO: Loading Signal (DO THIS FIRST)
 
 
     companion object{
