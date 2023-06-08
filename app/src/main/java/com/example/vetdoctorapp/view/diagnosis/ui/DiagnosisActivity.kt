@@ -59,8 +59,6 @@ class DiagnosisActivity : AppCompatActivity() {
             }
         }
     }
-    
-    //TODO: Loading Signal (DO THIS FIRST)
 
 
     companion object{

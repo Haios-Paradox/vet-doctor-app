@@ -25,8 +25,6 @@ object PatientRepository{
             .addOnFailureListener(onFailure)
     }
 
-    //TODO: Also make this realtime, good lord...
-
     fun getQueue(
         onSuccess: (List<DocumentSnapshot>?) -> Unit,
         onFailure: (Exception) -> Unit

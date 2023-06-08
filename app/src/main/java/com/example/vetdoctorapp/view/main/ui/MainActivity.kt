@@ -14,7 +14,12 @@ import com.example.vetdoctorapp.databinding.ActivityMainBinding
 import com.example.vetdoctorapp.view.auth.ui.AuthActivity
 
 class MainActivity : AppCompatActivity() {
-    //TODO: Make a new layout to handle payment
+    //TODO: Make Payment Feature
+    //TODO: The Flow First
+    //TODO: Then figure out the backend
+    //TODO: Then the XML
+    //TODO: Setup Fragment and all that jazz
+
 
     private lateinit var mainViewModel: MainViewModel
     private lateinit var binding : ActivityMainBinding

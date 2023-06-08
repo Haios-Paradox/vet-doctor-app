@@ -22,23 +22,17 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         authViewModel = ViewModelProvider(requireActivity())[AuthViewModel::class.java].also {
-            it.loading.observe(requireActivity()) {
-                if (it)
-                    binding.progressBar3.visibility = View.GONE
-                else
-                    binding.progressBar3.visibility = View.VISIBLE
-            }
         }
         binding = FragmentLoginBinding.inflate(inflater,container,false)
         // Inflate the layout for this fragment
 
-        binding.register.setOnClickListener {
+        binding.tvRegister.setOnClickListener {
             it.findNavController().navigate(R.id.registerFragment)
         }
 
-        binding.btnLogin.setOnClickListener {
-            val email = binding.editTextEmail.editText?.text.toString()
-            val pass = binding.editTextPassword.editText?.text.toString()
+        binding.buttonLogin.setOnClickListener {
+            val email = binding.editEmailLogin.text.toString()
+            val pass = binding.editEmailLogin.text.toString()
 
             if(email.isNotEmpty() && pass.isNotEmpty()){
                 authViewModel.login(email,pass)
