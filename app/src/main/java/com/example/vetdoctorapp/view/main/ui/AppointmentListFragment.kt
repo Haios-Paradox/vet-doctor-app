@@ -33,17 +33,19 @@ class AppointmentListFragment : Fragment() {
             }
         }
         mainViewModel.appointmentList.observe(requireActivity()){data->
-            val adapter = AppointmentAdapter(data)
-            binding.rvAppointment.adapter = adapter
-            adapter.setOnItemClickCallback(object : AppointmentAdapter.OnItemClickCallback {
-                override fun onItemClicked(data: Appointment) {
-                    startActivity(
-                        Intent(requireActivity(), DiagnosisActivity::class.java)
-                            .putExtra(DiagnosisActivity.APPO_ID, data.id)
-                    )
-                }
+            if(data!=null) {
+                val adapter = AppointmentAdapter(data)
+                binding.rvAppointment.adapter = adapter
+                adapter.setOnItemClickCallback(object : AppointmentAdapter.OnItemClickCallback {
+                    override fun onItemClicked(data: Appointment) {
+                        startActivity(
+                            Intent(requireActivity(), DiagnosisActivity::class.java)
+                                .putExtra(DiagnosisActivity.APPO_ID, data.id)
+                        )
+                    }
 
-            })
+                })
+            }
         }
 
         return binding.root

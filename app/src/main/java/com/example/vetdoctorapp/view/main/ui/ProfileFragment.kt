@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.example.vetdoctorapp.R
 import com.example.vetdoctorapp.controller.main.MainViewModel
 import com.example.vetdoctorapp.databinding.FragmentProfileBinding
 import com.example.vetdoctorapp.model.data.User
@@ -49,6 +50,8 @@ class ProfileFragment : Fragment() {
         mainViewModel.imageBitmap.observe(requireActivity()){
             if(it!=null)
                 Glide.with(binding.ivProfileImage).load(it).into(binding.ivProfileImage)
+            else
+                Glide.with(binding.ivProfileImage).load(R.drawable.baseline_add_photo_alternate_24).into(binding.ivProfileImage)
         }
 
         mainViewModel.message.observe(requireActivity()){
