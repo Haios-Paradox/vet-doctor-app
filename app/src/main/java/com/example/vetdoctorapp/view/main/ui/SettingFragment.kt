@@ -31,7 +31,7 @@ class SettingFragment : Fragment() {
         }
 
 
-        mainViewModel.message.observe(requireActivity()){ user->
+        mainViewModel.userData.observe(requireActivity()){ user->
             if(user!=null){
                 binding.btnStartSetting.setOnClickListener {
                     if(

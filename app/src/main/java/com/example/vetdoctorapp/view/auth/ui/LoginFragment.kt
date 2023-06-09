@@ -1,6 +1,7 @@
 package com.example.vetdoctorapp.view.auth.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,8 +33,8 @@ class LoginFragment : Fragment() {
 
         binding.buttonLogin.setOnClickListener {
             val email = binding.editEmailLogin.text.toString()
-            val pass = binding.editEmailLogin.text.toString()
-
+            val pass = binding.editPassLogin.text.toString()
+            Log.e("Auth", email+pass)
             if(email.isNotEmpty() && pass.isNotEmpty()){
                 authViewModel.login(email,pass)
             }

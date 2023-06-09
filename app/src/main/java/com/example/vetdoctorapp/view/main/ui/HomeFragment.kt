@@ -34,6 +34,7 @@ class HomeFragment : Fragment() {
                     binding.progressBar2.visibility = View.VISIBLE
             }
         }
+
         mainViewModel.appointmentList.observe(requireActivity()) { data ->
             if(data!=null){
                 val appointments: MutableMap<String, Appointment> = mutableMapOf()

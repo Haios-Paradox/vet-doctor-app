@@ -54,7 +54,7 @@ class ProfileFragment : Fragment() {
                 Glide.with(binding.ivProfileImage).load(R.drawable.baseline_add_photo_alternate_24).into(binding.ivProfileImage)
         }
 
-        mainViewModel.message.observe(requireActivity()){
+        mainViewModel.userData.observe(requireActivity()){
             if (it!=null)
                 setupView(it)
         }
@@ -67,8 +67,8 @@ class ProfileFragment : Fragment() {
 
     private fun saveData() {
         val user = User(
-            id = mainViewModel.message.value?.id,
-            avatar = mainViewModel.message.value?.avatar,
+            id = mainViewModel.userData.value?.id,
+            avatar = mainViewModel.userData.value?.avatar,
             name = binding.edProfileName.text.toString(),
             specialist = binding.edProfileSpec.selectedItem.toString(),
             email = binding.edProfileEmail.text.toString(),

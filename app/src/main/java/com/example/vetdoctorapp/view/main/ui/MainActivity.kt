@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this,it,Toast.LENGTH_SHORT).show()
         }
 
-        mainViewModel.message.observe(this){
+        mainViewModel.userData.observe(this){
             if(it!=null && it.available==true){
                 Navigation.findNavController(
                     this, binding.fragmentContainerView2.id
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_doctors ->{
-                    if(mainViewModel.message.value?.available==true)
+                    if(mainViewModel.userData.value?.available==true)
                         Navigation.findNavController(
                             this, binding.fragmentContainerView2.id
                         ).navigate(R.id.homeFragment)

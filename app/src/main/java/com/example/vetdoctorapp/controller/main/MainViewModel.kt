@@ -19,8 +19,8 @@ class MainViewModel : ViewModel(){
     private val _msg = MutableLiveData<String>()
     val msg: LiveData<String> = _msg
 
-    private val _message = MutableLiveData<User?>()
-    val message: LiveData<User?> = _message
+    private val _userData = MutableLiveData<User?>()
+    val userData: LiveData<User?> = _userData
 
     private val _appointmentList = MutableLiveData<List<DocumentSnapshot>>()
     val appointmentList: LiveData<List<DocumentSnapshot>> = _appointmentList
@@ -46,7 +46,7 @@ class MainViewModel : ViewModel(){
         loading.value = true
         UserRepository.getUserData(
             onSuccess = {
-                _message.value = it
+                _userData.value = it
                 getPatients()
                 loading.value = false
             },
@@ -105,7 +105,7 @@ class MainViewModel : ViewModel(){
 
     fun logout() {
         UserRepository.logout()
-        _message.value = null
+        _userData.value = null
     }
 
     fun endShift() {
