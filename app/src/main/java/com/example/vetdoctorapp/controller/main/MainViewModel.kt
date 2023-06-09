@@ -89,6 +89,7 @@ class MainViewModel : ViewModel(){
     }
 
     private fun getPatients(){
+        loading.value = true
         PatientRepository.getQueue(
             onSuccess = {
                 loading.value = false
