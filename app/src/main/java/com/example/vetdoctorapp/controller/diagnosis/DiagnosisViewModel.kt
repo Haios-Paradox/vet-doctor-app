@@ -131,6 +131,22 @@ class DiagnosisViewModel(val appointmentId: String) : ViewModel(){
             BitmapFactory.decodeByteArray(outputStream.toByteArray(), 0, outputStream.size())
         _imageBitmap.value = compressedBitmap
     }
+
+    fun approve() {
+        viewModelScope.launch {
+            try{
+                val approved = appointment.value
+                if (approved != null) {
+                    approved.paid = true
+                    AppointmentRepository.updateAppointment(approved)
+                }
+                _message.value = "Payment Approved"
+            }catch(e:Exception){
+                _message.value = e.cause?.message?:e.message?:"There was an error"
+            }
+        }
+
+    }
 }
 
 class ViewModelFactory(private val appointmentId: String) : ViewModelProvider.Factory {

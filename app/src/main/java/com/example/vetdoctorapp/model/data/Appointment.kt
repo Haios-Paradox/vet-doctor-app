@@ -12,5 +12,6 @@ data class Appointment(
     var treatment:String?=null,
     val timestamp : Long?=null,
     var complete : Boolean?=false,
-    val paid : Boolean?=false
+    var paid : Boolean?=false,
+    var payment: String?=null
 )

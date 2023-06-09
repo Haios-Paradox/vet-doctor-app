@@ -34,6 +34,13 @@ class NotesFragment : Fragment() {
             Glide.with(binding.ivPetImage).load(it.photo).into(binding.ivPetImage)
             binding.tvNotesPatient.text = it.patientName
             binding.tvNotesProblem.text = it.description
+            if(it.payment!=null){
+                Glide.with(binding.ivPayment).load(it.payment).into(binding.ivPayment)
+                binding.btnApprove.isEnabled = true
+                binding.btnApprove.setOnClickListener {
+                    diagnosisViewModel.approve()
+                }
+            }
         }
 
         return binding.root
