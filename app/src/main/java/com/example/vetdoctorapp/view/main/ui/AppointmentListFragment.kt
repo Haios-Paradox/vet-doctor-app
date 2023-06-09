@@ -26,7 +26,7 @@ class AppointmentListFragment : Fragment() {
         binding.rvAppointment.layoutManager = LinearLayoutManager(requireActivity())
         mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java].also {
             it.loading.observe(requireActivity()) {
-                if (it)
+                if (!it)
                     binding.progressBar.visibility = View.GONE
                 else
                     binding.progressBar.visibility = View.VISIBLE

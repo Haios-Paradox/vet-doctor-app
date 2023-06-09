@@ -23,7 +23,7 @@ class SettingFragment : Fragment() {
         binding = FragmentSettingBinding.inflate(inflater,container,false)
         mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java].also {
             it.loading.observe(requireActivity()) {
-                if (it)
+                if (!it)
                     binding.progressBar7.visibility = View.GONE
                 else
                     binding.progressBar7.visibility = View.VISIBLE

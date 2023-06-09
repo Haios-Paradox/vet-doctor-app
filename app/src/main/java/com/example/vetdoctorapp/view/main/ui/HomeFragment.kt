@@ -28,7 +28,7 @@ class HomeFragment : Fragment() {
 
         mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java].also {
             it.loading.observe(requireActivity()) {
-                if (it)
+                if (!it)
                     binding.progressBar2.visibility = View.GONE
                 else
                     binding.progressBar2.visibility = View.VISIBLE

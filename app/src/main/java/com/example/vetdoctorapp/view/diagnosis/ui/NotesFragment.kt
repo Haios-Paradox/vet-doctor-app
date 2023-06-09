@@ -19,15 +19,16 @@ class NotesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+        binding = FragmentNotesBinding.inflate(inflater,container,false)
         diagnosisViewModel = ViewModelProvider(requireActivity())[DiagnosisViewModel::class.java].also {
             it.loading.observe(requireActivity()) {
-                if (it)
+                if (!it)
                     binding.progressBar4.visibility = View.GONE
                 else
                     binding.progressBar4.visibility = View.VISIBLE
             }
         }
-        binding = FragmentNotesBinding.inflate(inflater,container,false)
+
 
         diagnosisViewModel.appointment.observe(requireActivity()){
             Glide.with(binding.ivPetImage).load(it.photo).into(binding.ivPetImage)

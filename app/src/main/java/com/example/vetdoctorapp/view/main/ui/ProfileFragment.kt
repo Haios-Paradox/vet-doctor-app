@@ -32,16 +32,16 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View{
-
+        binding = FragmentProfileBinding.inflate(inflater,container,false)
         mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java].also {
             it.loading.observe(requireActivity()) {
-                if (it)
+                if (!it)
                     binding.progressBar6.visibility = View.GONE
                 else
                     binding.progressBar6.visibility = View.VISIBLE
             }
         }
-        binding = FragmentProfileBinding.inflate(inflater,container,false)
+
         binding.ivProfileImage.setOnClickListener {
             dispatchTakePictureIntent()
         }

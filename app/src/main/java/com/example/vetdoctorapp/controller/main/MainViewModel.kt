@@ -55,6 +55,7 @@ class MainViewModel : ViewModel(){
                 loading.value = false
             }
         )
+        loading.value = false
     }
 
     fun updateProfile(user:User){
@@ -68,6 +69,7 @@ class MainViewModel : ViewModel(){
                 loading.value = false
                 _msg.value = e.cause?.message?:e.message?:"There was an error"
             }
+            loading.value = false
         }
 
     }
@@ -87,7 +89,6 @@ class MainViewModel : ViewModel(){
     }
 
     private fun getPatients(){
-        loading.value = true
         PatientRepository.getQueue(
             onSuccess = {
                 loading.value = false
@@ -98,6 +99,7 @@ class MainViewModel : ViewModel(){
                 _msg.value = e.cause?.message?:e.message?:"There was an error"
             }
         )
+        loading.value = false
     }
 
     fun logout() {

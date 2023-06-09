@@ -18,16 +18,16 @@ class PrescriptionFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-
+        binding = FragmentPrescriptionBinding.inflate(inflater,container,false)
         diagnosisViewModel = ViewModelProvider(requireActivity())[DiagnosisViewModel::class.java].also {
             it.loading.observe(requireActivity()) {
-                if (it)
+                if (!it)
                     binding.progressBar5.visibility = View.GONE
                 else
                     binding.progressBar5.visibility = View.VISIBLE
             }
         }
-        binding = FragmentPrescriptionBinding.inflate(inflater,container,false)
+
 
         binding.btnPresSave.setOnClickListener {
             val analysis = binding.edAnalysis.text.toString()
