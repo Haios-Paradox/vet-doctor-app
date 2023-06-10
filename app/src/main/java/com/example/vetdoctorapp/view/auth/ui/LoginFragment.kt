@@ -42,6 +42,9 @@ class LoginFragment : Fragment() {
                 Toast.makeText(requireActivity(),"Please Fill All In", Toast.LENGTH_SHORT).show()
             }
         }
+        binding.tvForgot.setOnClickListener {
+            it.findNavController().navigate(R.id.forgotFragment)
+        }
 
         return binding.root
     }

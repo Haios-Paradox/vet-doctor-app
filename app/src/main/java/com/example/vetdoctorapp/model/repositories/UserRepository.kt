@@ -13,6 +13,7 @@ import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
 import java.io.ByteArrayOutputStream
 
+
 object UserRepository{
     private val auth = FirebaseAuth.getInstance()
     private val db: FirebaseFirestore by lazy {
@@ -23,7 +24,7 @@ object UserRepository{
     private val storageRef = storage.reference
     fun getUserData(
         onSuccess: (User?) -> Unit,
-        onFailure: (Exception) -> Unit
+        onFailure: (Exception) -> Unit,
     ) {
         val uid = auth.uid
         if (uid == null) {
@@ -55,13 +56,13 @@ object UserRepository{
     }
 
     suspend fun createOrUpdateUserData(
-        userData: User
+        userData: User,
     ){
         val uid = auth.uid ?: throw (Exception("User Not Logged In"))
         db.collection(References.USER_COL).document(uid).set(userData).await()
     }
     suspend fun createOrUpdateUserData(
-        userData: User, file:Bitmap
+        userData: User, file: Bitmap,
     ) {
         val uid = auth.uid ?: throw (Exception("User Not Logged In"))
         val avatar = uploadImage(file,uid)
@@ -86,5 +87,20 @@ object UserRepository{
 
     fun logout() {
         auth.signOut()
+    }
+
+    fun resetPassword(
+        email:String,
+        onSuccess: (String?) -> Unit,
+        onFailure: (Exception) -> Unit
+    ){
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    onSuccess("Email Sent")
+                }else{
+                    onFailure(Exception("It Just Don't Work IDK Why"))
+                }
+            }.addOnFailureListener(onFailure)
     }
 }

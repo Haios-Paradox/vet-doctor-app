@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.vetdoctorapp.model.data.User
 import com.example.vetdoctorapp.model.repositories.AuthRepository
+import com.example.vetdoctorapp.model.repositories.UserRepository
 
 class AuthViewModel: ViewModel() {
 
@@ -51,5 +52,15 @@ class AuthViewModel: ViewModel() {
                 loading.value = false
             }
         }
+    }
+    fun resetPass(email:String){
+        UserRepository.resetPassword(
+            email,
+            onSuccess = {
+                _message.value = it
+            }, onFailure = {e->
+                _message.value = e.cause?.message?:e.message?:"There was an error"
+            }
+        )
     }
 }
