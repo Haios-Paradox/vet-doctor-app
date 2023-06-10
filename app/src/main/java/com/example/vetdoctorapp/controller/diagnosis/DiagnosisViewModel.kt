@@ -100,6 +100,7 @@ class DiagnosisViewModel(val appointmentId: String) : ViewModel(){
                 appointment.treatment = treatment
                 AppointmentRepository.updateAppointment(appointment)
                 loading.value = false
+                _message.value = "Updated!"
             }catch (e:Exception){
                 _message.value = e.cause?.message?:e.message?:"There was an error"
                 loading.value = false

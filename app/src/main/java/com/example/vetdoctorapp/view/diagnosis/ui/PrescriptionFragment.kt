@@ -28,6 +28,10 @@ class PrescriptionFragment : Fragment() {
             }
         }
 
+        diagnosisViewModel.appointment.observe(requireActivity()){
+            binding.tvPatientNamePrescription.text = it.patientName
+        }
+
 
         binding.btnPresSave.setOnClickListener {
             val analysis = binding.edAnalysis.text.toString()
