@@ -22,8 +22,8 @@ class DiagnosisActivity : AppCompatActivity() {
 
         binding = ActivityDiagnosisBinding.inflate(layoutInflater)
         if (appoId != null) {
-            diagnosisViewModel = ViewModelProvider(this, ViewModelFactory(appoId))[DiagnosisViewModel::class.java].also{
-                it.message.observe(this){
+            diagnosisViewModel = ViewModelProvider(this, ViewModelFactory(appoId))[DiagnosisViewModel::class.java].also{ viewModel ->
+                viewModel.message.observe(this){
                     Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
                 }
             }

@@ -33,7 +33,7 @@ class PrescriptionFragment : Fragment() {
         }
 
 
-        binding.btnPresSave.setOnClickListener {
+        binding.buttonPressSave.setOnClickListener {
             val analysis = binding.edAnalysis.text.toString()
             val treatment = binding.edTreatment.text.toString()
             diagnosisViewModel.updatePrescription(analysis,treatment)
